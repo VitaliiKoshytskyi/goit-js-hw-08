@@ -59,5 +59,6 @@ const formSubmitHandler = (event) => {
 
 }
 
-formEl.addEventListener('input', throttle((event) => inputHandler(event),2000))
+formEl.addEventListener('input', inputHandler)
+// formEl.addEventListener('input', throttle((event) => inputHandler(event),2000))
 formEl.addEventListener('submit', formSubmitHandler)
