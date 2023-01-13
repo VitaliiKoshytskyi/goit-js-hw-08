@@ -32,7 +32,6 @@ function checkState() {
 
 
 const inputHandler = (event) => {
-
     objectValues[event.target.name] = event.target.value
 
     const stringifidValues = JSON.stringify(objectValues)
@@ -42,11 +41,15 @@ const inputHandler = (event) => {
 
 const formSubmitHandler = (event) => {
     event.preventDefault()
+    if (event.currentTarget.elements.email.value === '' || event.currentTarget.elements.message.value === '') {
+        return alert('Please, fill in all fealds')
+    }
+    objectValues ={email:'',message:''}
     console.log(localStorage.getItem("feedback-form-state"))
     event.currentTarget.reset();
     localStorage.clear()
 
 }
 
-formEl.addEventListener('input', throttle(inputHandler,500))
+formEl.addEventListener('input', throttle(inputHandler,2000))
 formEl.addEventListener('submit', formSubmitHandler)
