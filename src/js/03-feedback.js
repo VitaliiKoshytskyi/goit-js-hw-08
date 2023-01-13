@@ -11,18 +11,14 @@ const itemWithCheckedState = checkState()
 checkState()
 showState()
 
-
+let objectValues ={email:'',message:''}
 
 function showState() {
     if (itemWithCheckedState === undefined) {
         return
     } inputEmailEl.value = itemWithCheckedState.email
     messageEl.value = itemWithCheckedState.message
-
-    
 }
-
-
 
 function checkState() {
     const itemInLocalStorage = localStorage.getItem("feedback-form-state")
@@ -37,14 +33,7 @@ function checkState() {
 
 const inputHandler = (event) => {
 
-    const emailValue = event.currentTarget.elements.email.value
-    const messageValue = event.currentTarget.elements.message.value
-    
-   
-    const objectValues = {
-        email: emailValue,
-        message : messageValue
-    }
+    objectValues[event.target.name] = event.target.value
 
     const stringifidValues = JSON.stringify(objectValues)
     localStorage.setItem("feedback-form-state", stringifidValues)
@@ -59,6 +48,5 @@ const formSubmitHandler = (event) => {
 
 }
 
-formEl.addEventListener('input', inputHandler)
-// formEl.addEventListener('input', throttle((event) => inputHandler(event),2000))
+formEl.addEventListener('input', throttle(inputHandler,500))
 formEl.addEventListener('submit', formSubmitHandler)
