@@ -1,24 +1,25 @@
 import throttle from "lodash.throttle"
 
 const formEl = document.querySelector('.feedback-form')
-const inputEmailEl = document.querySelector('input')
-const messageEl = document.querySelector('textarea')
+
 
 const itemWithCheckedState = checkState()
 
 
 
 checkState()
-showState()
+
 
 let objectValues ={email:'',message:''}
 
-function showState() {
-    if (itemWithCheckedState === undefined) {
-        return
-    } inputEmailEl.value = itemWithCheckedState.email
-    messageEl.value = itemWithCheckedState.message
-}
+
+    if (itemWithCheckedState ) {
+        
+    formEl.elements.email.value = itemWithCheckedState.email 
+    formEl.elements.message.value = itemWithCheckedState.message 
+    objectValues = JSON.parse(localStorage.getItem("feedback-form-state"))
+    } 
+
 
 function checkState() {
     const itemInLocalStorage = localStorage.getItem("feedback-form-state")
@@ -33,7 +34,6 @@ function checkState() {
 
 const inputHandler = (event) => {
     objectValues[event.target.name] = event.target.value
-
     const stringifidValues = JSON.stringify(objectValues)
     localStorage.setItem("feedback-form-state", stringifidValues)
 }
@@ -46,12 +46,12 @@ const formSubmitHandler = (event) => {
     }
     objectValues ={email:'',message:''}
     console.log(localStorage.getItem("feedback-form-state"))
-    event.currentTarget.reset();
-    localStorage.clear()
+    formEl.reset();
+    localStorage.removeItem("feedback-form-state")
 
 }
 
-formEl.addEventListener('input', throttle(inputHandler,500))
+formEl.addEventListener('input', throttle(inputHandler, 500))
 formEl.addEventListener('submit', formSubmitHandler)
 
 
